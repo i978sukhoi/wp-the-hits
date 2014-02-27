@@ -1,4 +1,4 @@
 wp-the-hits
 ===========
 
-조회수 기능. usage: &amp;lt;?php the_hits(); ?&amp;gt;
+조회수 기능. usage: <?php the_hits(); ?>

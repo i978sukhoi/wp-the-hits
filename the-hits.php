@@ -10,11 +10,12 @@
 function the_hits($echo = true) {
 	if($post_id = get_the_ID()) {
 		$hits = apply_filters('the_hits', ($hits = get_post_meta($post_id, 'the_hits', true)) ? intval($hits) : 0);
+		if($hits === - 1) return;
 		if($echo) echo $hits;
 		return $hits;
 	}
 }
-add_action('template_redirect', function () {
+function the_hits_increase_hits() {
 	if(! is_singular()) return; // 단독으로 이 포스트를 보는 경우에만 조회수를 증가시킨다.
 	$post_id = get_the_ID();
 	$hits = apply_filters('increase_hits', ($hits = get_post_meta($post_id, 'the_hits', true)) ? intval($hits) : 0);
@@ -32,4 +33,5 @@ add_action('template_redirect', function () {
 			setcookie('the_hits', implode('|', $cookie), time() + 86400 * 15, '/', COOKIE_DOMAIN);
 		}
 	}
-});
+}
+add_action('template_redirect', 'the_hits_increase_hits');
